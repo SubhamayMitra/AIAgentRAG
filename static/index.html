@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>RAG Chat</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Document RAG Chat</h1>
+    <div class="upload">
+      <input type="file" id="file-input" accept=".pdf,.docx,.txt,.md" />
+      <button id="upload-btn">Upload &amp; Ingest</button>
+      <span id="upload-status"></span>
+    </div>
+  </header>
+
+  <main id="messages"></main>
+
+  <form id="chat-form">
+    <input type="text" id="chat-input" placeholder="Ask a question…" autocomplete="off" />
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="/app.js"></script>
+</body>
+</html>

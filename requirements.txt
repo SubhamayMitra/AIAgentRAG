@@ -1,0 +1,9 @@
+anthropic>=0.68
+chromadb
+pypdf
+python-docx
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic-settings
+python-multipart
