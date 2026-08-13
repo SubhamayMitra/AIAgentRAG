@@ -1,28 +1,45 @@
-"""The retrieval tool exposed to Claude via the Anthropic tool runner."""
+"""The retrieval tool exposed to the model via OpenAI function calling."""
 
 from __future__ import annotations
-
-from anthropic import beta_tool
 
 from app.config import settings
 from app.vectorstore import get_collection, query as query_collection
 
+# OpenAI has no equivalent of Anthropic's `@beta_tool` (which derives the JSON
+# schema from the function signature + docstring), so the schema is written
+# out by hand here and paired with the plain function below.
+SEARCH_DOCUMENTS_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "search_documents",
+        "description": (
+            "Search the ingested document knowledge base for relevant passages. "
+            "Use this whenever the user's question might be answered by the "
+            "documents that have been ingested into the knowledge base — for "
+            "example, questions about specific facts, policies, or content that "
+            "would plausibly appear in an uploaded document. Do not use it for "
+            "general knowledge questions, greetings, or requests unrelated to "
+            "the document collection."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "A natural-language question or topic to search for.",
+                },
+                "n_results": {
+                    "type": "integer",
+                    "description": "Number of relevant passages to return (default 5).",
+                },
+            },
+            "required": ["query"],
+        },
+    },
+}
 
-@beta_tool
+
 def search_documents(query: str, n_results: int = 5) -> str:
-    """Search the ingested document knowledge base for relevant passages.
-
-    Use this whenever the user's question might be answered by the
-    documents that have been ingested into the knowledge base — for
-    example, questions about specific facts, policies, or content that
-    would plausibly appear in an uploaded document. Do not use it for
-    general knowledge questions, greetings, or requests unrelated to the
-    document collection.
-
-    Args:
-        query: A natural-language question or topic to search for.
-        n_results: Number of relevant passages to return (default 5).
-    """
     n_results = n_results or settings.n_results_default
     collection = get_collection()
     result = query_collection(collection, query, n_results)

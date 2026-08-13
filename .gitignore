@@ -6,4 +6,5 @@ venv/
 data/chroma_db/*
 !data/chroma_db/.gitkeep
 documents/*
-!documents/.gitkeep
+!documents/.gitkeep\
+.DS_Store

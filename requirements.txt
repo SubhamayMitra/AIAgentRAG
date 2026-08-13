@@ -1,4 +1,4 @@
-anthropic>=0.68
+openai>=1.50
 chromadb
 pypdf
 python-docx

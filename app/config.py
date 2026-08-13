@@ -6,9 +6,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
-    anthropic_api_key: str = ""
+    openai_api_key: str = ""
 
-    model: str = "claude-opus-5"
+    openai_model: str = "gpt-4o"
     max_tokens: int = 4096
 
     chroma_persist_dir: Path = Path("./data/chroma_db")

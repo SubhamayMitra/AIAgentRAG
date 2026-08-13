@@ -11,15 +11,3 @@ clearly unrelated to the document collection.
 (and page number, when given) shown in the tool result, e.g. "(handbook.pdf, page 3)".
 - If the search results don't contain relevant information, say so plainly rather than guessing \
 or answering from general knowledge as if it came from the documents."""
-
-# The last block carries the cache_control marker so this system prompt (and the
-# tool definitions that render before it) can be reused across turns/requests.
-# Claude Opus 5's cache-eligibility floor is 512 tokens — cheap to enable even
-# if payoff is modest until usage scales.
-SYSTEM_BLOCKS = [
-    {
-        "type": "text",
-        "text": SYSTEM_PROMPT,
-        "cache_control": {"type": "ephemeral"},
-    }
-]
